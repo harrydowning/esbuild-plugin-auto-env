@@ -1,6 +1,6 @@
 {
   "name": "esbuild-plugin-auto-env",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "author": "",
   "license": "MIT",
@@ -15,5 +15,8 @@
     "@types/node": "^22.5.4",
     "esbuild": "^0.23.1",
     "typescript": "^5.5.4"
+  },
+  "scripts": {
+    "build": "npx tsc --build"
   }
 }

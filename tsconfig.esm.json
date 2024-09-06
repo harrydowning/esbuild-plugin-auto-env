@@ -2,8 +2,8 @@
   "extends": "./tsconfig.base",
   "compilerOptions": {
     "composite": true,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "esnext",
+    "moduleResolution": "node",
     "outDir": "dist/esm"
   }
 }

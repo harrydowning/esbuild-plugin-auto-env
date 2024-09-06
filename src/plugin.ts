@@ -10,10 +10,7 @@ type AutoEnvPlugin = (options: {
   exclude?: string[];
 }) => Plugin;
 
-export const autoEnv: AutoEnvPlugin = ({
-  filter = /.*/,
-  exclude = [],
-} = {}) => ({
+const autoEnv: AutoEnvPlugin = ({ filter = /.*/, exclude = [] } = {}) => ({
   name: "autoEnv",
   setup: (build) => {
     build.onLoad({ filter }, (args) => {
@@ -29,3 +26,5 @@ export const autoEnv: AutoEnvPlugin = ({
     });
   },
 });
+
+export { autoEnv };
