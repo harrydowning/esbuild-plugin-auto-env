@@ -1,0 +1,19 @@
+{
+  "name": "esbuild-plugin-auto-env",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "exports": {
+    "require": "./dist/cjs/plugin.js",
+    "import": "./dist/esm/plugin.js"
+  },
+  "main": "dist/cjs/plugin.js",
+  "module": "./dist/esm/plugin.js",
+  "types": "./dist/cjs/plugin.d.ts" ,
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "esbuild": "^0.23.1",
+    "typescript": "^5.5.4"
+  }
+}
