@@ -1,9 +1,0 @@
-{
-  "extends": "./tsconfig.base",
-  "compilerOptions": {
-    "composite": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "outDir": "dist/esm"
-  }
-}
