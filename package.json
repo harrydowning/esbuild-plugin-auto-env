@@ -1,9 +1,12 @@
 {
   "name": "esbuild-plugin-auto-env",
   "version": "0.1.0",
-  "description": "",
-  "author": "",
+  "description": "An esbuild plugin which automatically replaces environment variables used in code with those defined at build time.",
   "license": "MIT",
+  "author": {
+    "name": "Harry Downing",
+    "email": "harrydowning.dev@gmail.com"
+  },
   "exports": {
     "require": {
       "types": "./dist/plugin.d.ts",
@@ -16,13 +19,13 @@
   },
   "main": "dist/plugin.cjs",
   "module": "./dist/plugin.mjs",
-  "types": "./dist/plugin.d.ts" ,
+  "types": "./dist/plugin.d.ts",
+  "scripts": {
+    "build": "node build.mjs && tsc --emitDeclarationOnly"
+  },
   "devDependencies": {
     "@types/node": "^22.5.4",
     "esbuild": "^0.23.1",
     "typescript": "^5.5.4"
-  },
-  "scripts": {
-    "build": "node build.mjs && tsc --emitDeclarationOnly"
   }
 }
