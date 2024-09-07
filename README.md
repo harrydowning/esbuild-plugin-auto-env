@@ -4,13 +4,13 @@ An [esbuild](https://esbuild.github.io/) plugin which automatically replaces env
 
 ## Install
 
-```
+```sh
 npm i -D esbuild-plugin-auto-env
 ```
 
 or
 
-```
+```sh
 yarn add -D esbuild-plugin-auto-env
 ```
 
@@ -32,7 +32,7 @@ esbuild.build({
 
 With the following command
 
-```shell
+```sh
 TEST=true node build.mjs
 ```
 
