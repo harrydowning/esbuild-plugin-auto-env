@@ -2,7 +2,7 @@ import fs from "fs";
 import { globSync } from "glob";
 import { Plugin } from "esbuild";
 
-type AutoEnvPlugin = (options: {
+type AutoEnvPlugin = (options?: {
   include?: string | string[];
   exclude?: string | string[];
   ignore?: string[];
