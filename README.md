@@ -84,4 +84,4 @@ esbuild.build({
 });
 ```
 
-\*_See full glob syntax [here](https://github.com/isaacs/node-glob)_
+\*_See full glob syntax [here](https://github.com/isaacs/node-glob#readme)_
