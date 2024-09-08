@@ -1,6 +1,6 @@
 {
   "name": "esbuild-plugin-auto-env",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "An esbuild plugin which automatically replaces environment variables used in code with those defined at build time.",
   "homepage": "https://github.com/harrydowning/esbuild-plugin-auto-env#readme",
   "repository": {
