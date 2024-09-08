@@ -1,4 +1,5 @@
 import fs from "fs";
+import { globSync } from "glob";
 import { Plugin } from "esbuild";
 
 const envRegExp = (name: string) => {
@@ -6,24 +7,36 @@ const envRegExp = (name: string) => {
 };
 
 type AutoEnvPlugin = (options: {
-  filter?: RegExp;
-  exclude?: string[];
+  include?: string | string[];
+  exclude?: string | string[];
+  ignore?: string[];
 }) => Plugin;
 
-const autoEnv: AutoEnvPlugin = ({ filter = /.*/, exclude = [] } = {}) => ({
+const autoEnv: AutoEnvPlugin = ({
+  include = "src/**",
+  exclude = "node_modules/**",
+  ignore = [],
+} = {}) => ({
   name: "autoEnv",
   setup: (build) => {
-    build.onLoad({ filter }, (args) => {
-      let src = fs.readFileSync(args.path, "utf8");
+    const files = globSync(include, { ignore: exclude });
+    const env: { [key: string]: string } = {};
+
+    for (const file of files) {
+      const src = fs.readFileSync(file, "utf8");
       for (const match of src.matchAll(envRegExp(".+?"))) {
         const name = match[1];
-        if (!exclude.includes(name)) {
-          const value = JSON.stringify(process.env[name]) || "undefined";
-          src = src.replace(envRegExp(name), value);
+        const value = process.env[name];
+        if (!ignore.includes(name) && value !== undefined) {
+          env[name] = value;
         }
       }
-      return { contents: src, loader: "default" };
-    });
+    }
+
+    build.initialOptions.define = {
+      "process.env": JSON.stringify(env),
+      ...build.initialOptions.define,
+    };
   },
 });
 
