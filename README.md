@@ -16,7 +16,7 @@ yarn add -D esbuild-plugin-auto-env
 
 ## Usage
 
-The following shows the simplest use of this plugin. This will replace all environment variables used in the `src` directory with those defined at build time. If an environment variable is used in code but not defined at build time it will not be replaced unless `platform` is set to `browser`.
+The following build script will replace all environment variables used in the `src` directory with those defined at build time. If an environment variable is used in code but not defined at build time it will not be replaced unless `platform` is set to `browser`.
 
 ```js
 import esbuild from "esbuild";
@@ -52,7 +52,7 @@ esbuild.build({
 
 Default: `node_modules/**`
 
-Glob pattern(s)* determining which files not to replace environment variables in. The following build script will replace all environment variables except for `process.env.TEST`.
+Glob pattern(s)* determining which files not to replace environment variables in. The following build script will not replace environment variables found in any directory named `tmp` under the `src` directory.
 
 ```js
 import esbuild from "esbuild";
@@ -62,7 +62,7 @@ esbuild.build({
   entryPoints: ["src/index.js"],
   outfile: "dist/index.js",
   bundle: true,
-  plugins: [autoEnv({ exclude: ["src/"] })],
+  plugins: [autoEnv({ exclude: ["src/**/tmp/**"] })],
 });
 ```
 
