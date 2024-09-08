@@ -1,29 +1,49 @@
 import fs from "fs";
+import { globSync } from "glob";
 import { Plugin } from "esbuild";
 
-const envRegExp = (name: string) => {
-  return new RegExp(String.raw`\bprocess\.env\.(${name})\b`, "g");
-};
-
-type AutoEnvPlugin = (options: {
-  filter?: RegExp;
-  exclude?: string[];
+type AutoEnvPlugin = (options?: {
+  include?: string | string[];
+  exclude?: string | string[];
+  ignore?: string[];
 }) => Plugin;
 
-const autoEnv: AutoEnvPlugin = ({ filter = /.*/, exclude = [] } = {}) => ({
+const autoEnv: AutoEnvPlugin = ({
+  include = "src/**",
+  exclude = "node_modules/**",
+  ignore = [],
+} = {}) => ({
   name: "autoEnv",
   setup: (build) => {
-    build.onLoad({ filter }, (args) => {
-      let src = fs.readFileSync(args.path, "utf8");
-      for (const match of src.matchAll(envRegExp(".+?"))) {
+    const options = build.initialOptions;
+    const files = globSync(include, { ignore: exclude, nodir: true });
+    const env: { [key: string]: string } = {};
+
+    for (const file of files) {
+      const src = fs.readFileSync(file, "utf8");
+      for (const match of src.matchAll(/\bprocess\.env\.(.+?)\b/g)) {
         const name = match[1];
-        if (!exclude.includes(name)) {
-          const value = JSON.stringify(process.env[name]) || "undefined";
-          src = src.replace(envRegExp(name), value);
+        const value = JSON.stringify(process.env[name]);
+        const fullName = `process.env.${name}`;
+
+        if (ignore.includes(name)) {
+          continue;
+        }
+
+        if (value === undefined) {
+          if (options.platform === "browser") {
+            env[fullName] = "undefined";
+          }
+        } else {
+          env[fullName] = value;
         }
       }
-      return { contents: src, loader: "default" };
-    });
+    }
+
+    options.define = {
+      ...env,
+      ...options.define,
+    };
   },
 });
 
