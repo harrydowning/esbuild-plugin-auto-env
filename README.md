@@ -16,7 +16,7 @@ yarn add -D esbuild-plugin-auto-env
 
 ## Usage
 
-After running the following build script
+The following shows the simplest use of this plugin. This will replace all environment variables used in the `src` directory with those defined at build time. If an environment variable is used in code but not defined at build time it will not be replaced unless `platform` is set to `browser`.
 
 ```js
 import esbuild from "esbuild";
@@ -30,17 +30,11 @@ esbuild.build({
 });
 ```
 
-With the following command
+### `include`
 
-```sh
-TEST=true node build.mjs
-```
+Default: `src/**`
 
-Every use of `process.env.TEST` will be replaced with `"true"`. If an environment variable is used in code but not defined at build time it will be set to `undefined`.
-
-### `filter`
-
-To replace environment variables only in certain files a `filter` regex can be specified. The following build script will only replace environment variables found in the `src` directory.
+Glob pattern(s)* determining which files to replace environment variables in. The following build script will replace environment variables found in all javascript files.
 
 ```js
 import esbuild from "esbuild";
@@ -50,13 +44,15 @@ esbuild.build({
   entryPoints: ["src/index.js"],
   outfile: "dist/index.js",
   bundle: true,
-  plugins: [autoEnv({ filter: /src/ })],
+  plugins: [autoEnv({ include: "**/*.js" })],
 });
 ```
 
 ### `exclude`
 
-To stop specific environment variables from being replaced an `exclude` list can be specified. The following build script will replace all environment variables except for `process.env.TEST`.
+Default: `node_modules/**`
+
+Glob pattern(s)* determining which files not to replace environment variables in. The following build script will replace all environment variables except for `process.env.TEST`.
 
 ```js
 import esbuild from "esbuild";
@@ -66,6 +62,26 @@ esbuild.build({
   entryPoints: ["src/index.js"],
   outfile: "dist/index.js",
   bundle: true,
-  plugins: [autoEnv({ exclude: ["TEST"] })],
+  plugins: [autoEnv({ exclude: ["src/"] })],
 });
 ```
+
+### `ignore`
+
+Default: `[]`
+
+List of environment variable names not to replace. The following build script will not replace `process.env.TEST` even if it occurs in a file matched by `include`.
+
+```js
+import esbuild from "esbuild";
+import { autoEnv } from "esbuild-plugin-auto-env";
+
+esbuild.build({
+  entryPoints: ["src/index.js"],
+  outfile: "dist/index.js",
+  bundle: true,
+  plugins: [autoEnv({ ignore: ["TEST"] })],
+});
+```
+
+\*_See full glob syntax [here](https://github.com/isaacs/node-glob)_
