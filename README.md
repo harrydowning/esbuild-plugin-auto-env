@@ -16,7 +16,7 @@ yarn add -D esbuild-plugin-auto-env
 
 ## Usage
 
-The following build script will replace all environment variables used in the `src` directory with those defined at build time. If an environment variable is used in code but not defined at build time it will not be replaced unless `platform` is set to `browser`.
+The following build script will replace all environment variables used in the `src` directory with those defined at build time. If an environment variable is used in code but not defined at build time it will not be replaced unless `platform` is set to `browser`, in which case it will be replaced with `undefined`.
 
 ```js
 import esbuild from "esbuild";

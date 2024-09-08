@@ -23,7 +23,7 @@ const autoEnv: AutoEnvPlugin = ({
       const src = fs.readFileSync(file, "utf8");
       for (const match of src.matchAll(/\bprocess\.env\.(.+?)\b/g)) {
         const name = match[1];
-        const value = JSON.stringify(process.env[name]);
+        const value = process.env[name];
         const fullName = `process.env.${name}`;
 
         if (ignore.includes(name)) {
@@ -35,7 +35,7 @@ const autoEnv: AutoEnvPlugin = ({
             env[fullName] = "undefined";
           }
         } else {
-          env[fullName] = value;
+          env[fullName] = JSON.stringify(value);
         }
       }
     }
