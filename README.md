@@ -52,7 +52,7 @@ esbuild.build({
 
 Default: `node_modules/**`, `src/**/*.{spec,test}*`
 
-Glob pattern(s)* determining which files not to find environment variables in. The following build script will not replace environment variables found in any file under the `src/test` directory.
+Glob pattern(s)* determining which files not to find environment variables in. The following build script will not replace environment variables found in any file under the `node_modules` or `src/test` directories.
 
 ```js
 import esbuild from "esbuild";
@@ -62,7 +62,7 @@ esbuild.build({
   entryPoints: ["src/index.js"],
   outfile: "dist/index.js",
   bundle: true,
-  plugins: [autoEnv({ exclude: ["src/test/**"] })],
+  plugins: [autoEnv({ exclude: ["node_modules/**", "src/test/**"] })],
 });
 ```
 
