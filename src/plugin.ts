@@ -10,7 +10,7 @@ type AutoEnvPlugin = (options?: {
 
 const autoEnv: AutoEnvPlugin = ({
   include = "src/**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}",
-  exclude = "node_modules/**",
+  exclude = ["node_modules/**", "src/**/*.{spec,test}*"],
   ignore = [],
 } = {}) => ({
   name: "autoEnv",
