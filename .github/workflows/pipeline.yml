@@ -8,7 +8,7 @@ on:
 
 jobs:
   node-pipeline:
-    uses: harrydowning/github-workflows/.github/workflows/node-pipeline.yml@v1.0.0
+    uses: harrydowning/github-workflows/.github/workflows/node-pipeline.yml@v1.0.1
     with:
       repository-owner: harrydowning
       node-version: "20"
